@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutina de Tren Superior sin Equipamiento</title>
+<style>
+  :root {
+    --bg: #0f1220;
+    --card: #1a1e33;
+    --card-alt: #20263f;
+    --accent: #ff6b35;
+    --accent-2: #4ecdc4;
+    --text: #eef0f7;
+    --muted: #a3a9c2;
+    --border: #2c3252;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, #0f1220 0%, #12162a 100%);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    text-align: center;
+    padding: 40px 20px 30px;
+    background: radial-gradient(circle at top, #23284a 0%, #0f1220 70%);
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+    color: var(--accent);
+  }
+  header p {
+    color: var(--muted);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 20px 60px;
+  }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+    margin-top: 0;
+  }
+  h3 {
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  h3 .icon {
+    color: var(--accent);
+  }
+  .exercise-block {
+    background: var(--card-alt);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+  }
+  .exercise-block strong.key {
+    color: var(--accent-2);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 4px;
+    font-size: 0.95rem;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: #262c4d;
+    color: var(--accent-2);
+  }
+  tr:nth-child(even) td {
+    background: rgba(255,255,255,0.02);
+  }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .summary-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .summary-item {
+    flex: 1 1 200px;
+    background: var(--card-alt);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .summary-item .value {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--accent);
+  }
+  .summary-item .label {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .note {
+    background: rgba(78, 205, 196, 0.1);
+    border-left: 4px solid var(--accent-2);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-top: 16px;
+    font-size: 0.95rem;
+  }
+  ol, ul {
+    padding-left: 20px;
+  }
+  ol li, ul li {
+    margin-bottom: 8px;
+  }
+  .tempo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .tempo-card {
+    background: var(--card-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .tempo-card .phase {
+    color: var(--accent-2);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+  .tempo-card .time {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 6px 0;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 20px;
+    font-size: 0.85rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #1a1e33;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.85rem;
+  }
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 12px 0 4px;
+  }
+  .table-scroll table {
+    margin: 0;
+    min-width: 480px;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 28px 16px 20px; }
+    header h1 { font-size: 1.4rem; }
+    header p { font-size: 0.9rem; }
+    .container { padding: 12px 12px 40px; }
+    section { padding: 16px 16px; margin-bottom: 16px; border-radius: 10px; }
+    h2 { font-size: 1.15rem; }
+    h3 { font-size: 1rem; }
+    .exercise-block { padding: 12px 14px; margin-bottom: 12px; }
+    table { font-size: 0.82rem; }
+    th, td { padding: 8px; }
+    .summary-box { gap: 10px; }
+    .summary-item { flex: 1 1 100%; padding: 12px; }
+    .summary-item .value { font-size: 1.3rem; }
+    .tempo-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .tempo-card { padding: 10px; }
+    .tempo-card .time { font-size: 1.2rem; }
+    .badge { display: block; margin-top: 8px; width: fit-content; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🤸 Rutina de Tren Superior sin Equipamiento (Solo Peso Corporal)</h1>
+  <p>Versión <strong>sin mancuernas ni equipamiento de gimnasio</strong> para hombres de <strong>80 kg</strong> que se inician en el entrenamiento de fuerza. Varios movimientos son <strong>unilaterales o alternados</strong>, lo que activa intensamente el abdomen para mantener la estabilidad.</p>
+</header>
+
+<div class="container">
+
+  <!-- Calentamiento -->
+  <section>
+    <h2>🔥 Calentamiento Previo (5 minutos)</h2>
+    <p>El objetivo es el mismo que en la rutina con mancuerna: "lubricar" las articulaciones del tren superior y avisarle a tu sistema nervioso que vas a trabajar. No necesitas ningún accesorio.</p>
+
+    <div class="exercise-block">
+      <h3>1. Rotación de hombros (Movilidad)</h3>
+      <p><strong class="key">Cómo se hace:</strong> Párate derecho y estira los brazos hacia los lados formando una "T". Haz círculos pequeños hacia adelante 30 segundos, y luego 30 segundos hacia atrás.</p>
+      <p><strong class="key">Duración:</strong> 1 minuto en total.</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>2. El "Abrazo" (Activación de pecho y espalda)</h3>
+      <p><strong class="key">Cómo se hace:</strong> Abre los brazos grandes hacia los lados sintiendo cómo se estira el pecho, y luego ciérralos cruzándolos por delante como un abrazo fuerte. Alterna qué brazo queda encima.</p>
+      <p><strong class="key">Duración:</strong> 1 minuto (unas 20 repeticiones).</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>3. Rotación de muñecas y codos (Protección articular)</h3>
+      <p><strong class="key">Cómo se hace:</strong> Entrelaza los dedos y rota las muñecas en círculos hacia ambos lados. Luego extiende los brazos al frente y dobla los codos llevando las manos a los hombros.</p>
+      <p><strong class="key">Duración:</strong> 1 minuto (30 s muñecas, 30 s codos).</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>4. Flexiones de rodillas (Activación de pecho y tríceps)</h3>
+      <p><strong class="key">Cómo se hace:</strong> Apoyado sobre las rodillas, haz 10 flexiones lentas y suaves solo para llevar sangre a los músculos, sin llegar al fallo.</p>
+      <p><strong class="key">Duración:</strong> 1 minuto.</p>
+    </div>
+  </section>
+
+  <!-- Tabla principal -->
+  <section>
+    <h2>📋 Tabla de la Rutina</h2>
+    <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Ejercicio</th>
+          <th>Músculo Principal</th>
+          <th>Músculos Secundarios</th>
+          <th>Estructura</th>
+          <th>Descanso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Superman alternado</strong></td>
+          <td>Espalda baja (Erectores)</td>
+          <td>Glúteos y deltoides posterior</td>
+          <td>3 series de 12 reps por lado</td>
+          <td>45 segundos</td>
+        </tr>
+        <tr>
+          <td><strong>2. Flexiones de brazos</strong></td>
+          <td>Pectoral mayor (Pecho)</td>
+          <td>Tríceps y deltoides anterior</td>
+          <td>3 series de 10 a 15 reps</td>
+          <td>60 segundos</td>
+        </tr>
+        <tr>
+          <td><strong>3. Flexiones pica</strong></td>
+          <td>Deltoides (Hombros completo)</td>
+          <td>Tríceps y trapecio</td>
+          <td>3 series de 8 a 12 reps</td>
+          <td>60 segundos</td>
+        </tr>
+        <tr>
+          <td><strong>4. Curl isométrico alternado</strong></td>
+          <td>Bíceps braquial (Brazos adelante)</td>
+          <td>Antebrazos</td>
+          <td>3 series de 8 a 10 reps por lado</td>
+          <td>45 segundos</td>
+        </tr>
+        <tr>
+          <td><strong>5. Fondos de tríceps en silla</strong></td>
+          <td>Tríceps braquial (Brazos atrás)</td>
+          <td>Deltoides anterior</td>
+          <td>3 series de 10 a 12 reps</td>
+          <td>45 segundos</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="note">
+      ℹ️ <strong>Sobre el ejercicio 5:</strong> usa una silla, banco o el borde firme de un sofá; es mobiliario de casa, no equipamiento de gimnasio. Si no dispones de nada estable, sustitúyelo por <strong>flexiones diamante</strong> (manos juntas formando un rombo bajo el pecho).
+    </div>
+  </section>
+
+  <!-- Tiempo estimado -->
+  <section>
+    <h2>⏱️ Tiempo Total Estimado de la Rutina</h2>
+    <p>Cálculo aproximado usando un ritmo normal controlado (~3-4 segundos por repetición, algo más lento en el ejercicio isométrico). En los ejercicios alternados (1 y 4), el descanso se toma <strong>una sola vez por serie</strong>, tras trabajar ambos lados.</p>
+    <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Ejercicio</th>
+          <th>Reps totales por serie</th>
+          <th>Tiempo de ejercicio</th>
+          <th>Descansos</th>
+          <th>Tiempo de descanso</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1. Superman alternado</td><td>3 × 24 = 72 reps</td><td>≈ 3.6 min</td><td>3 × 45 s</td><td>2.25 min</td><td>≈ 5.85 min</td></tr>
+        <tr><td>2. Flexiones de brazos</td><td>3 × 12 = 36 reps</td><td>≈ 1.8 min</td><td>3 × 60 s</td><td>3 min</td><td>≈ 4.8 min</td></tr>
+        <tr><td>3. Flexiones pica</td><td>3 × 10 = 30 reps</td><td>≈ 1.5 min</td><td>3 × 60 s</td><td>3 min</td><td>≈ 4.5 min</td></tr>
+        <tr><td>4. Curl isométrico alternado</td><td>3 × 18 = 54 reps</td><td>≈ 3.6 min</td><td>3 × 45 s</td><td>2.25 min</td><td>≈ 5.85 min</td></tr>
+        <tr><td>5. Fondos de tríceps en silla</td><td>3 × 11 = 33 reps</td><td>≈ 1.65 min</td><td>3 × 45 s</td><td>2.25 min</td><td>≈ 3.9 min</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-item"><div class="value">≈12 min</div><div class="label">Tiempo de ejercicio</div></div>
+      <div class="summary-item"><div class="value">≈13 min</div><div class="label">Tiempo de descanso</div></div>
+      <div class="summary-item"><div class="value">≈25 min</div><div class="label">Tiempo total de la rutina</div></div>
+    </div>
+
+    <div class="note">
+      💡 <strong>Nota:</strong> Si aplicas el método <strong>"4-0-1-0"</strong> (bajando en 4 segundos en vez de en 1-2), el tiempo de ejercicio sube considerablemente y el <strong>tiempo total puede llegar a ≈35 minutos</strong>.
+    </div>
+  </section>
+
+  <!-- Instrucciones de ejecución -->
+  <section>
+    <h2>🎯 Instrucciones de Ejecución y Postura</h2>
+
+    <div class="exercise-block">
+      <h3>1. Superman alternado (Espalda baja)</h3>
+      <p><strong class="key">Músculo clave:</strong> Erectores de la columna y glúteos, con activación de hombro posterior.</p>
+      <p><strong class="key">Técnica:</strong> Acuéstate boca abajo con brazos y piernas extendidos. Levanta a la vez el brazo derecho y la pierna izquierda unos centímetros del suelo, aprieta 1-2 segundos y baja controlado. Alterna con brazo izquierdo y pierna derecha.</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>2. Flexiones de brazos (Pecho)</h3>
+      <p><strong class="key">Músculo clave:</strong> Pectoral y empuje de los brazos.</p>
+      <p><strong class="key">Técnica:</strong> Manos un poco más anchas que los hombros, cuerpo en línea recta desde la cabeza hasta los talones (o hasta las rodillas si eres principiante). Baja controlado hasta casi tocar el pecho en el suelo y empuja con fuerza hacia arriba sin abrir los codos en exceso.</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>3. Flexiones pica (Hombros)</h3>
+      <p><strong class="key">Músculo clave:</strong> Parte superior y lateral de los hombros.</p>
+      <p><strong class="key">Técnica:</strong> En posición de "V invertida" (cadera elevada, manos y pies en el suelo formando un triángulo), dobla los codos bajando la cabeza hacia el suelo entre las manos y empuja de vuelta arriba. Cuanto más verticales estén las caderas, más trabajan los hombros.</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>4. Curl isométrico alternado (Bíceps)</h3>
+      <p><strong class="key">Músculo clave:</strong> Aísla el bíceps mediante resistencia manual autogenerada.</p>
+      <p><strong class="key">Técnica:</strong> De pie, junta ambas palmas frente al pecho o coloca la mano libre sobre la muñeca del brazo que trabaja para hacer resistencia. Flexiona el codo "contra" esa resistencia como si levantaras un peso invisible, aguantando 2-3 segundos de tensión máxima en cada repetición. Cambia de brazo tras completar el lado.</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>5. Fondos de tríceps en silla (Tríceps)</h3>
+      <p><strong class="key">Músculo clave:</strong> Parte posterior del brazo.</p>
+      <p><strong class="key">Técnica:</strong> Siéntate en el borde de una silla firme, apoya las palmas junto a las caderas con los dedos hacia adelante. Desliza los glúteos fuera del asiento y baja el cuerpo doblando los codos hacia atrás (no hacia los lados) hasta 90°, luego empuja para subir. Mantén las piernas flexionadas para principiantes o extendidas para más dificultad.</p>
+    </div>
+  </section>
+
+  <!-- Reglas -->
+  <section>
+    <h2>💡 Reglas del Entrenamiento Alternado y sin Equipo</h2>
+    <ol>
+      <li><strong>Comienza con tu lado débil:</strong> en los ejercicios alternados (Superman y curl isométrico), si eres diestro empieza siempre por el brazo/lado izquierdo. Iguala luego la misma cantidad de repeticiones con el lado fuerte.</li>
+      <li><strong>El descanso se toma al final:</strong> no descanses al cambiar de lado. Termina ambos lados y solo entonces inicia la cuenta regresiva de descanso.</li>
+      <li><strong>Progresión sin peso añadido:</strong> al no poder sumar kilos, progresa primero en repeticiones dentro del rango marcado, luego en tempo (más lento) y por último en variantes más exigentes.</li>
+    </ol>
+
+    <h2>🧠 Método de Intensidad Avanzada: Tiempo Bajo Tensión</h2>
+    <p>Si las repeticiones se sienten fáciles y llegas cómodo al rango alto de la tabla, aumenta la intensidad modificando la <strong>velocidad del movimiento</strong>, igual que con la mancuerna.</p>
+
+    <h3>La Regla del "4-0-1-0"</h3>
+    <div class="tempo-grid">
+      <div class="tempo-card"><div class="phase">Bajada (Excéntrica)</div><div class="time">4 s</div><div class="label">Controla la caída contra la gravedad</div></div>
+      <div class="tempo-card"><div class="phase">Pausa abajo</div><div class="time">0 s</div><div class="label">Pasa directo a subir</div></div>
+      <div class="tempo-card"><div class="phase">Subida (Concéntrica)</div><div class="time">1 s</div><div class="label">Explosiva y controlada</div></div>
+      <div class="tempo-card"><div class="phase">Pausa arriba</div><div class="time">0 s</div><div class="label">Antes de la siguiente repetición</div></div>
+    </div>
+
+    <h3>Progresiones cuando el ejercicio se vuelva fácil</h3>
+    <ul>
+      <li><strong>Flexiones de brazos:</strong> eleva los pies sobre un escalón o silla, o avanza hacia flexiones a una mano asistidas.</li>
+      <li><strong>Flexiones pica:</strong> eleva los pies en una silla para acercarte al patrón de un press de hombro vertical.</li>
+      <li><strong>Fondos en silla:</strong> extiende ambas piernas por completo, o eleva los pies sobre otra silla.</li>
+      <li><strong>Superman y curl isométrico:</strong> aumenta el tiempo de contracción máxima (de 2-3 a 5 segundos) en vez de las repeticiones.</li>
+    </ul>
+  </section>
+
+  <!-- Análisis -->
+  <section>
+    <h2>🌟 Puntos Fuertes de la Rutina <span class="badge">10/10 para empezar</span></h2>
+    <ul>
+      <li><strong>Cero equipamiento necesario:</strong> puedes hacerla en cualquier habitación, en un viaje o al aire libre.</li>
+      <li><strong>Misma estructura de movimientos:</strong> mantiene empuje horizontal, empuje vertical, extensión de espalda y aislamiento de brazos, igual que la versión con mancuerna.</li>
+      <li><strong>Foco en el Core por Asimetría:</strong> los ejercicios alternados siguen exigiendo estabilidad del tronco.</li>
+      <li><strong>Progresión clara sin comprar nada:</strong> repeticiones → tempo lento → variantes elevadas, en ese orden.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>⚠️ Aspectos a Tener en Cuenta para tus 80 kg</h2>
+    <ol>
+      <li><strong>Ejercicios donde progresarás rápido:</strong> Superman alternado y fondos en silla suelen sentirse manejables pronto; aplica el tempo 4-0-1-0 en cuanto superes el rango alto con buena técnica.</li>
+      <li><strong>Ejercicios más desafiantes al inicio:</strong> las flexiones de brazos y pica exigen mover el 100% de tu peso corporal (80 kg repartidos); si al principio no completas el rango mínimo, empieza apoyando las rodillas (flexiones) o eleva menos las caderas (pica) e ve bajando la asistencia semana a semana.</li>
+    </ol>
+
+    <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Ejercicio</th>
+          <th>Facilidad de Progresión inicial</th>
+          <th>Activación del Core</th>
+          <th>Principal Riesgo por Mala Técnica</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Superman alternado</td><td>Alta</td><td>Media</td><td>Hiperextender demasiado la zona lumbar</td></tr>
+        <tr><td>Flexiones de brazos</td><td>Media</td><td>Alta</td><td>Dejar caer la cadera o levantar el glúteo</td></tr>
+        <tr><td>Flexiones pica</td><td>Baja</td><td>Alta</td><td>Cargar todo el peso en la cabeza en vez de los brazos</td></tr>
+        <tr><td>Curl isométrico alternado</td><td>Alta</td><td>Nula</td><td>Perder la tensión relajando el brazo de apoyo</td></tr>
+        <tr><td>Fondos de tríceps en silla</td><td>Media</td><td>Baja</td><td>Abrir los codos hacia los lados en vez de atrás</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>💡 Recomendación para el Futuro Próximo</h2>
+    <p>En 4 a 6 semanas, cuando completes con facilidad el rango alto de repeticiones con tempo lento, avanza a las variantes elevadas descritas arriba (pies elevados, fondos con piernas extendidas, flexiones a una mano asistidas) para mantener la sobrecarga progresiva sin necesidad de comprar ningún equipo.</p>
+  </section>
+
+</div>
+
+<footer>
+  Rutina de Tren Superior sin Equipamiento · Generada a partir de tus notas personales
+</footer>
+
+</body>
+</html>
