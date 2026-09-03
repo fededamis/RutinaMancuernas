@@ -160,3 +160,15 @@ La rutina es un **10/10 para empezar hoy mismo**. Sin embargo, el cuerpo humano 
 
 Cuando alcances ese punto, te sugiero mutar a una **mancuerna regulable (de discos)** o adquirir un juego que te permita subir a **7.5 kg o 10 kg** para mantener el principio de sobrecarga progresiva y seguir ganando fuerza.
 
+---
+
+## 📱 Seguimiento del Entrenamiento
+
+Para mantener la constancia y ver tu progreso real a lo largo de las semanas, es fundamental **registrar cada vez que completes la rutina** en alguna app de seguimiento de hábitos o entrenamiento.
+
+* **Por qué es importante:** te permite ver cuántos días a la semana realmente entrenaste, mantener una racha de constancia y detectar si te estás saltando sesiones.
+* **Qué registrar:** la fecha, si completaste las 5 series de cada ejercicio y, opcionalmente, si notaste que el peso ya se sentía liviano (para saber cuándo aplicar el método 4-0-1-0 o subir de peso).
+* **Opciones de apps:** cualquier app de hábitos (como Habitica, Streaks o similar) o una app específica de entrenamiento (como Strong, Hevy o un simple calendario/checklist) sirve perfectamente para este propósito.
+
+> 💡 **Tip:** marca la rutina como completada apenas termines el enfriamiento, para no olvidarlo. Llevar el registro es lo que te permitirá comparar en un mes cuántas veces entrenaste realmente.
+
