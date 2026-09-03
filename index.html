@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rutina de Tren Superior con Una Mancuerna (5 kg)</title>
+<style>
+  :root {
+    --bg: #0f1220;
+    --card: #1a1e33;
+    --card-alt: #20263f;
+    --accent: #ff6b35;
+    --accent-2: #4ecdc4;
+    --text: #eef0f7;
+    --muted: #a3a9c2;
+    --border: #2c3252;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, #0f1220 0%, #12162a 100%);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    text-align: center;
+    padding: 40px 20px 30px;
+    background: radial-gradient(circle at top, #23284a 0%, #0f1220 70%);
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+    color: var(--accent);
+  }
+  header p {
+    color: var(--muted);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 20px 60px;
+  }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    color: var(--accent-2);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 8px;
+    margin-top: 0;
+  }
+  h3 {
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  h3 .icon {
+    color: var(--accent);
+  }
+  .exercise-block {
+    background: var(--card-alt);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+  }
+  .exercise-block strong.key {
+    color: var(--accent-2);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 4px;
+    font-size: 0.95rem;
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: #262c4d;
+    color: var(--accent-2);
+  }
+  tr:nth-child(even) td {
+    background: rgba(255,255,255,0.02);
+  }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .video-link::before {
+    content: "▶ ";
+  }
+  .summary-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .summary-item {
+    flex: 1 1 200px;
+    background: var(--card-alt);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .summary-item .value {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--accent);
+  }
+  .summary-item .label {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .note {
+    background: rgba(78, 205, 196, 0.1);
+    border-left: 4px solid var(--accent-2);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-top: 16px;
+    font-size: 0.95rem;
+  }
+  ol, ul {
+    padding-left: 20px;
+  }
+  ol li, ul li {
+    margin-bottom: 8px;
+  }
+  .tempo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .tempo-card {
+    background: var(--card-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .tempo-card .phase {
+    color: var(--accent-2);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+  .tempo-card .time {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin: 6px 0;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 20px;
+    font-size: 0.85rem;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #1a1e33;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.85rem;
+  }
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 12px 0 4px;
+  }
+  .table-scroll table {
+    margin: 0;
+    min-width: 480px;
+  }
+
+  /* Selector de modo */
+  .mode-switch {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(15, 18, 32, 0.95);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+  }
+  .mode-switch button {
+    background: var(--card-alt);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .mode-switch button:hover {
+    color: var(--text);
+    border-color: var(--accent-2);
+  }
+  .mode-switch button.active {
+    background: var(--accent);
+    color: #1a1e33;
+    border-color: var(--accent);
+  }
+
+  /* Modo simple: oculta todo lo que no sea la sección principal */
+  body.simple-mode .full-only {
+    display: none;
+  }
+  body.simple-mode header p {
+    display: none;
+  }
+  body.simple-mode .container {
+    padding-top: 10px;
+  }
+  .simple-only {
+    display: none;
+  }
+  body.simple-mode .simple-only {
+    display: block;
+  }
+  .warmup-mini {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .warmup-mini li {
+    list-style: none;
+    background: var(--card-alt);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    flex: 1 1 200px;
+  }
+  .warmup-mini li strong {
+    color: var(--accent-2);
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 28px 16px 20px; }
+    header h1 { font-size: 1.4rem; }
+    header p { font-size: 0.9rem; }
+    .container { padding: 12px 12px 40px; }
+    section { padding: 16px 16px; margin-bottom: 16px; border-radius: 10px; }
+    h2 { font-size: 1.15rem; }
+    h3 { font-size: 1rem; }
+    .exercise-block { padding: 12px 14px; margin-bottom: 12px; }
+    table { font-size: 0.82rem; }
+    th, td { padding: 8px; }
+    .summary-box { gap: 10px; }
+    .summary-item { flex: 1 1 100%; padding: 12px; }
+    .summary-item .value { font-size: 1.3rem; }
+    .tempo-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .tempo-card { padding: 10px; }
+    .tempo-card .time { font-size: 1.2rem; }
+    .badge { display: block; margin-top: 8px; width: fit-content; }
+    .mode-switch button { padding: 7px 16px; font-size: 0.85rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mode-switch">
+  <button id="btn-full" class="active" onclick="setMode('full')">📄 Versión Completa</button>
+  <button id="btn-simple" onclick="setMode('simple')">📋 Versión Simple</button>
+</div>
+
+<header>
+  <h1>💪 Rutina de Tren Superior con Una Mancuerna (5 kg)</h1>
+  <p>Diseñada para hombres de <strong>80 kg</strong> que se inician en el entrenamiento de fuerza. Trabajo <strong>unilateral</strong> que activa intensamente el abdomen para mantener la estabilidad.</p>
+</header>
+
+<div class="container">
+
+  <!-- Calentamiento -->
+  <section class="full-only">
+    <h2>🔥 Calentamiento Previo (5 minutos, sin peso)</h2>
+    <p>Para tu nivel actual, el calentamiento <strong>no debe incluir peso</strong>. Su único objetivo es "lubricar" las articulaciones del tren superior y avisarle a tu sistema nervioso que vas a trabajar.</p>
+    <a class="video-link" href="https://www.tiktok.com/@pipecalisteniafit/video/7653125334275083552?_r=1&_t=ZS-99NC6Z25S1x" target="_blank" rel="noopener noreferrer">Ver video</a>
+
+    <div class="exercise-block">
+      <h3>1. Rotación de hombros (Movilidad)</h3>
+      <p><strong class="key">Cómo se hace:</strong> Párate derecho y estira los brazos hacia los lados formando una "T". Haz círculos pequeños hacia adelante 30 segundos, y luego 30 segundos hacia atrás.</p>
+      <p><strong class="key">Duración:</strong> 1 minuto en total.</p>
+      <a class="video-link" href="https://www.youtube.com/shorts/wdsT4VC3_0I" target="_blank" rel="noopener noreferrer">Ver video</a>
+    </div>
+
+    <div class="exercise-block">
+      <h3>2. El "Abrazo" (Activación de pecho y espalda)</h3>
+      <p><strong class="key">Cómo se hace:</strong> Abre los brazos grandes hacia los lados sintiendo cómo se estira el pecho, y luego ciérralos cruzándolos por delante como un abrazo fuerte. Alterna qué brazo queda encima.</p>
+      <p><strong class="key">Duración:</strong> 1 minuto (unas 20 repeticiones).</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>3. Rotación de muñecas y codos (Protección articular)</h3>
+      <p><strong class="key">Cómo se hace:</strong> Entrelaza los dedos y rota las muñecas en círculos hacia ambos lados. Luego extiende los brazos al frente y dobla los codos llevando las manos a los hombros.</p>
+      <p><strong class="key">Duración:</strong> 1 minuto (30 s muñecas, 30 s codos).</p>
+      <a class="video-link" href="https://www.youtube.com/shorts/n1xNDkEehk4" target="_blank" rel="noopener noreferrer">Ver video</a>
+      &nbsp;·&nbsp;
+      <a class="video-link" href="https://www.youtube.com/shorts/ooaUEeqVZ44" target="_blank" rel="noopener noreferrer">Ver video 2</a>
+    </div>
+
+    <div class="exercise-block">
+      <h3>4. La serie de aproximación (¡La más importante!)</h3>
+      <p>Justo antes del primer ejercicio (<em>Remo a una mano</em>), haz <strong>10 repeticiones sin la mancuerna</strong>, simulando el gesto con el brazo libre y apretando el músculo al subir.</p>
+    </div>
+  </section>
+
+  <!-- Calentamiento reducido (solo modo simple) -->
+  <section class="simple-only">
+    <h2>🔥 Calentamiento Rápido (5 min)</h2>
+    <ul class="warmup-mini">
+      <li><strong>Hombros:</strong> círculos 30s adelante + 30s atrás</li>
+      <li><strong>Abrazo:</strong> 20 reps abriendo y cruzando brazos</li>
+      <li><strong>Muñecas/codos:</strong> 30s + 30s de rotación</li>
+      <li><strong>Aproximación:</strong> 10 reps del Remo sin peso</li>
+    </ul>
+  </section>
+
+  <!-- Tabla principal (siempre visible, incluso en modo simple) -->
+  <section>
+    <h2>📋 Tabla de la Rutina</h2>
+    <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Ejercicio</th>
+          <th>Músculo Principal</th>
+          <th>Músculos Secundarios</th>
+          <th>Estructura</th>
+          <th>Descanso</th>
+          <th>Principal Riesgo por Mala Técnica</th>
+          <th>Video</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Remo a una mano</strong></td>
+          <td>Dorsal ancho (Espalda)</td>
+          <td>Bíceps, trapecio y deltoides posterior</td>
+          <td>3 series de 10 reps por lado</td>
+          <td>60 segundos</td>
+          <td>Rotar la columna por estirar de más abajo</td>
+          <td><a href="https://www.tiktok.com/@pipecalisteniafit/video/7644281987120778529?_r=1&_t=ZS-99NC6Z25S1x" target="_blank" rel="noopener noreferrer">Ver</a></td>
+        </tr>
+        <tr>
+          <td><strong>2. Floor Press unilateral</strong></td>
+          <td>Pectoral mayor (Pecho)</td>
+          <td>Tríceps y deltoides anterior</td>
+          <td>3 series de 12 reps por lado</td>
+          <td>60 segundos</td>
+          <td>Chocar el codo bruscamente contra el piso</td>
+          <td><a href="https://www.youtube.com/shorts/TvPviMnKg6s" target="_blank" rel="noopener noreferrer">Ver</a></td>
+        </tr>
+        <tr>
+          <td><strong>3. Press de hombro sentado</strong></td>
+          <td>Deltoides (Hombros completo)</td>
+          <td>Tríceps y trapecio</td>
+          <td>3 series de 10 reps por lado</td>
+          <td>60 segundos</td>
+          <td>Arquear la zona lumbar para compensar el peso</td>
+          <td><a href="https://www.youtube.com/shorts/liDHRmG6eGQ" target="_blank" rel="noopener noreferrer">Ver</a> · <a href="https://www.tiktok.com/@marombaniacos/video/7561613016718921016?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer">Ver 2</a></td>
+        </tr>
+        <tr>
+          <td><strong>4. Curl concentrado</strong></td>
+          <td>Bíceps braquial (Brazos adelante)</td>
+          <td>Braquial anterior y antebrazos</td>
+          <td>3 series de 10 reps por lado</td>
+          <td>60 segundos</td>
+          <td>Despegar el codo del muslo</td>
+          <td><a href="https://www.youtube.com/shorts/LQcQNJiVY24" target="_blank" rel="noopener noreferrer">Ver</a></td>
+        </tr>
+        <tr>
+          <td><strong>5. Extensión tras nuca</strong></td>
+          <td>Tríceps braquial (Brazos atrás)</td>
+          <td>Antebrazos</td>
+          <td>3 series de 12 reps (ambas manos)</td>
+          <td>60 segundos</td>
+          <td>Abrir los codos hacia afuera dañando el hombro</td>
+          <td><a href="https://www.youtube.com/shorts/yZyosuztCYo" target="_blank" rel="noopener noreferrer">Ver</a></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- Tiempo estimado -->
+  <section class="full-only">
+    <h2>⏱️ Tiempo Total Estimado de la Rutina</h2>
+    <p>Cálculo aproximado usando un ritmo normal controlado (~3 segundos por repetición). En los ejercicios unilaterales (1 a 4), el descanso se toma <strong>una sola vez por serie</strong>, tras trabajar ambos brazos.</p>
+    <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Ejercicio</th>
+          <th>Reps totales por serie</th>
+          <th>Tiempo de ejercicio</th>
+          <th>Descansos</th>
+          <th>Tiempo de descanso</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1. Remo a una mano</td><td>3 × 20 = 60 reps</td><td>≈ 3 min</td><td>3 × 60 s</td><td>3 min</td><td>≈ 6 min</td></tr>
+        <tr><td>2. Floor Press unilateral</td><td>3 × 24 = 72 reps</td><td>≈ 3.6 min</td><td>3 × 60 s</td><td>3 min</td><td>≈ 6.6 min</td></tr>
+        <tr><td>3. Press de hombro sentado</td><td>3 × 20 = 60 reps</td><td>≈ 3 min</td><td>3 × 60 s</td><td>3 min</td><td>≈ 6 min</td></tr>
+        <tr><td>4. Curl concentrado</td><td>3 × 20 = 60 reps</td><td>≈ 3 min</td><td>3 × 60 s</td><td>3 min</td><td>≈ 6 min</td></tr>
+        <tr><td>5. Extensión tras nuca</td><td>3 × 12 = 36 reps</td><td>≈ 1.8 min</td><td>3 × 60 s</td><td>3 min</td><td>≈ 4.8 min</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-item"><div class="value">≈14.5 min</div><div class="label">Tiempo de ejercicio</div></div>
+      <div class="summary-item"><div class="value">≈15 min</div><div class="label">Tiempo de descanso</div></div>
+      <div class="summary-item"><div class="value">≈29-30 min</div><div class="label">Tiempo total de la rutina</div></div>
+    </div>
+
+    <div class="note">
+      💡 <strong>Nota:</strong> Si aplicas el método <strong>"4-0-1-0"</strong> (5 segundos por repetición en vez de 3), el tiempo de ejercicio sube a ≈24 minutos y el <strong>tiempo total aumenta a ≈39 minutos</strong>.
+    </div>
+  </section>
+
+  <!-- Instrucciones de ejecución -->
+  <section class="full-only">
+    <h2>🎯 Instrucciones de Ejecución y Postura</h2>
+
+    <div class="exercise-block">
+      <h3>1. Remo a una mano (Espalda)</h3>
+      <p><strong class="key">Músculo clave:</strong> Laterales de la espalda media y alta.</p>
+      <p><strong class="key">Técnica:</strong> Apoya la mano y rodilla que no trabajan sobre una silla o sillón. Mantén la espalda paralela al suelo y recta. Con la mano libre, levanta la mancuerna llevando el codo hacia la cadera, sin dar tirones con el cuerpo.</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>2. Floor Press unilateral (Pecho)</h3>
+      <p><strong class="key">Músculo clave:</strong> Pectoral y empuje de los brazos.</p>
+      <p><strong class="key">Técnica:</strong> Acuéstate boca arriba con las rodillas dobladas y pies firmes. Sostén la mancuerna con un brazo. Baja lentamente hasta que el tríceps toque el piso suavemente y empuja con fuerza hacia el techo. Cambia de brazo al terminar la serie.</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>3. Press de hombro sentado (Hombros)</h3>
+      <p><strong class="key">Músculo clave:</strong> Parte superior y lateral de los hombros.</p>
+      <p><strong class="key">Técnica:</strong> Siéntate con la espalda recta y el abdomen contraído. Sostén la mancuerna a la altura de la oreja. Empuja hacia arriba en línea recta hasta estirar el brazo, sin inclinar el torso.</p>
+      <a class="video-link" href="https://www.youtube.com/shorts/liDHRmG6eGQ" target="_blank" rel="noopener noreferrer">Ver video</a>
+      &nbsp;·&nbsp;
+      <a class="video-link" href="https://www.tiktok.com/@marombaniacos/video/7561613016718921016?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer">Ver video 2</a>
+    </div>
+
+    <div class="exercise-block">
+      <h3>4. Curl concentrado (Bíceps)</h3>
+      <p><strong class="key">Músculo clave:</strong> Aísla por completo el bíceps.</p>
+      <p><strong class="key">Técnica:</strong> Siéntate, inclina el torso hacia adelante y apoya el codo en la cara interna del muslo del mismo lado. Flexiona el brazo subiendo la mancuerna hacia el pecho sin mover el hombro. Controla el descenso.</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>5. Extensión tras nuca (Tríceps)</h3>
+      <p><strong class="key">Músculo clave:</strong> Parte posterior del brazo.</p>
+      <p><strong class="key">Técnica:</strong> Sentado o de pie. Sostén la mancuerna con <strong>ambas manos</strong>, llévala detrás de la cabeza y baja flexionando los codos. Extiende los brazos hacia el techo con los codos apuntando hacia adelante, nunca abiertos.</p>
+    </div>
+  </section>
+
+  <!-- Estiramiento post-entrenamiento -->
+  <section class="full-only">
+    <h2>🧘 Estiramiento Post-Entrenamiento (Enfriamiento)</h2>
+    <p>Al terminar la rutina, dedica unos minutos a estirar los músculos trabajados (espalda, pecho, hombros y brazos). Esto ayuda a la recuperación y reduce la rigidez muscular del día siguiente.</p>
+    <a class="video-link" href="https://www.youtube.com/watch?v=ienwpFp3Kvg" target="_blank" rel="noopener noreferrer">Ver video</a>
+  </section>
+
+  <!-- Reglas unilaterales -->
+  <section class="full-only">
+    <h2>💡 Reglas del Entrenamiento Unilateral</h2>
+    <ol>
+      <li><strong>Comienza con tu lado débil:</strong> si eres diestro, empieza siempre con el brazo izquierdo. Haz las repeticiones máximas controladas que puedas y luego iguala esa cantidad con el brazo fuerte.</li>
+      <li><strong>El descanso se toma al final:</strong> no descanses al cambiar de brazo. Termina el lado izquierdo, pasa al derecho y solo entonces inicia la cuenta regresiva de descanso.</li>
+      <li><strong>Progresión en el tiempo:</strong> mantén el peso de 5 kg durante 3 o 4 semanas. Llega al rango alto de repeticiones con técnica perfecta antes de subir de peso.</li>
+    </ol>
+
+    <h2>🧠 Método de Intensidad Avanzada: Tiempo Bajo Tensión</h2>
+    <p>Si la mancuerna de 5 kg empieza a sentirse ligera y no puedes sumar más peso, aumenta la intensidad modificando la <strong>velocidad del movimiento</strong>.</p>
+
+    <h3>La Regla del "4-0-1-0"</h3>
+    <div class="tempo-grid">
+      <div class="tempo-card"><div class="phase">Bajada (Excéntrica)</div><div class="time">4 s</div><div class="label">Controla la caída contra la gravedad</div></div>
+      <div class="tempo-card"><div class="phase">Pausa abajo</div><div class="time">0 s</div><div class="label">Pasa directo a subir</div></div>
+      <div class="tempo-card"><div class="phase">Subida (Concéntrica)</div><div class="time">1 s</div><div class="label">Explosiva y controlada</div></div>
+      <div class="tempo-card"><div class="phase">Pausa arriba</div><div class="time">0 s</div><div class="label">Antes de la siguiente repetición</div></div>
+    </div>
+    <p><strong>¿Por qué funciona?</strong> Al frenar la bajada durante 4 segundos, generas microrroturas en las fibras musculares que obligan al cuerpo a reparar el tejido y ganar fuerza. Excelente técnica para progresar de forma segura con equipamiento limitado.</p>
+  </section>
+
+  <!-- Análisis -->
+  <section class="full-only">
+    <h2>🌟 Puntos Fuertes de la Rutina <span class="badge">10/10 para empezar</span></h2>
+    <ul>
+      <li><strong>Estructura de Movimientos Completa:</strong> cubre empuje horizontal, empuje vertical, tracción horizontal y aislamiento de brazos.</li>
+      <li><strong>Foco en el Core por Asimetría:</strong> el trabajo unilateral obliga a abdominales y oblicuos a estabilizar el tronco.</li>
+      <li><strong>Gestión Correcta del Lado Débil:</strong> empezar por el lado no dominante previene desbalances de fuerza y masa muscular.</li>
+      <li><strong>Estrategia Inteligente para el Peso Fijo:</strong> el método "4-0-1-0" permite seguir progresando sin gastar en más peso de inmediato.</li>
+    </ul>
+  </section>
+
+  <section class="full-only">
+    <h2>⚠️ Aspectos a Tener en Cuenta para tus 80 kg</h2>
+    <ol>
+      <li><strong>Ejercicios donde los 5 kg se sentirán ligeros rápidamente:</strong> Remo a una mano y Floor Press. Es probable que en 2 semanas superes las 15 repeticiones con facilidad — aplica el ritmo 4-0-1-0 de inmediato.</li>
+      <li><strong>Ejercicios donde los 5 kg son adecuados o desafiantes:</strong> Press de hombro, Curl concentrado y Extensión tras nuca. Exigirán un esfuerzo correcto dentro de los rangos marcados.</li>
+    </ol>
+
+    <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Ejercicio</th>
+          <th>Facilidad de Progresión inicial</th>
+          <th>Activación del Core</th>
+          <th>Principal Riesgo por Mala Técnica</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Remo a una mano</td><td>Alta</td><td>Media</td><td>Rotar la columna por estirar de más abajo</td></tr>
+        <tr><td>Floor Press</td><td>Alta</td><td>Baja (el suelo da estabilidad)</td><td>Chocar el codo bruscamente contra el piso</td></tr>
+        <tr><td>Press de hombro</td><td>Media</td><td>Alta</td><td>Arquear la zona lumbar para compensar el peso</td></tr>
+        <tr><td>Curl concentrado</td><td>Baja</td><td>Nula</td><td>Despegar el codo del muslo</td></tr>
+        <tr><td>Extensión tras nuca</td><td>Baja</td><td>Baja</td><td>Abrir los codos hacia afuera dañando el hombro</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="full-only">
+    <h2>💡 Recomendación para el Futuro Próximo</h2>
+    <p>En 4 a 6 semanas, tu musculatura se habrá coordinado y los 5 kg totales dejarán de romper fibras en la espalda y el pecho, incluso usando el método lento. Cuando alcances ese punto, considera una <strong>mancuerna regulable (de discos)</strong> o un juego que permita subir a <strong>7.5 kg o 10 kg</strong> para mantener la sobrecarga progresiva.</p>
+  </section>
+
+  <!-- Seguimiento -->
+  <section class="full-only">
+    <h2>📱 Seguimiento del Entrenamiento</h2>
+    <p>Para mantener la constancia y ver tu progreso real a lo largo de las semanas, es fundamental <strong>registrar cada vez que completes la rutina</strong> en alguna app de seguimiento de hábitos o entrenamiento.</p>
+    <ul>
+      <li><strong>Por qué es importante:</strong> te permite ver cuántos días a la semana realmente entrenaste, mantener una racha de constancia y detectar si te estás saltando sesiones.</li>
+      <li><strong>Qué registrar:</strong> la fecha, si completaste las 5 series de cada ejercicio y, opcionalmente, si notaste que el peso ya se sentía liviano (para saber cuándo aplicar el método 4-0-1-0 o subir de peso).</li>
+      <li><strong>Opciones de apps:</strong> cualquier app de hábitos (como Habitica, Streaks o similar) o una app específica de entrenamiento (como Strong, Hevy o un simple calendario/checklist) sirve perfectamente para este propósito.</li>
+    </ul>
+    <div class="note">
+      💡 <strong>Tip:</strong> marca la rutina como completada apenas termines el enfriamiento, para no olvidarlo. Llevar el registro es lo que te permitirá comparar en un mes cuántas veces entrenaste realmente.
+    </div>
+  </section>
+
+  <!-- Seguimiento resumido (solo modo simple) -->
+  <section class="simple-only">
+    <h2>📱 Registrá tu Entrenamiento</h2>
+    <p>No olvides marcar en tu app (Habitica, Streaks, Strong, Hevy, etc.) que completaste hoy la rutina, para llevar el conteo de tu constancia.</p>
+  </section>
+
+</div>
+
+<footer class="full-only">
+  Rutina de Tren Superior con Una Mancuerna · Generada a partir de tus notas personales
+</footer>
+
+<script>
+  function setMode(mode) {
+    const isSimple = mode === 'simple';
+    document.body.classList.toggle('simple-mode', isSimple);
+    document.getElementById('btn-full').classList.toggle('active', !isSimple);
+    document.getElementById('btn-simple').classList.toggle('active', isSimple);
+    try { localStorage.setItem('rutinaMode', mode); } catch (e) {}
+  }
+
+  (function initMode() {
+    let saved = 'full';
+    try { saved = localStorage.getItem('rutinaMode') || 'full'; } catch (e) {}
+    setMode(saved);
+  })();
+</script>
+
+</body>
+</html>
