@@ -56,6 +56,28 @@
     border-bottom: 2px solid var(--border);
     padding-bottom: 8px;
     margin-top: 0;
+    cursor: pointer;
+    user-select: none;
+  }
+  h2:hover {
+    opacity: 0.85;
+  }
+  h2::after {
+    content: "▾";
+    display: inline-block;
+    float: right;
+    color: var(--muted);
+    transition: transform 0.2s ease;
+  }
+  section.collapsed h2 {
+    border-bottom-color: transparent;
+    padding-bottom: 8px;
+  }
+  section.collapsed h2::after {
+    transform: rotate(-90deg);
+  }
+  section.collapsed > *:not(h2) {
+    display: none;
   }
   h3 {
     color: var(--text);
@@ -299,7 +321,7 @@
 <div class="container">
 
   <!-- Calentamiento -->
-  <section class="full-only">
+  <section class="full-only" id="warmup-full">
     <h2>🔥 Calentamiento Previo (5 minutos, sin peso)</h2>
     <p>Para tu nivel actual, el calentamiento <strong>no debe incluir peso</strong>. Su único objetivo es "lubricar" las articulaciones del tren superior y avisarle a tu sistema nervioso que vas a trabajar.</p>
     <a class="video-link" href="https://www.tiktok.com/@pipecalisteniafit/video/7653125334275083552?_r=1&_t=ZS-99NC6Z25S1x" target="_blank" rel="noopener noreferrer">Ver video</a>
@@ -333,7 +355,7 @@
   </section>
 
   <!-- Calentamiento reducido (solo modo simple) -->
-  <section class="simple-only">
+  <section class="simple-only" id="warmup-simple">
     <h2>🔥 Calentamiento Rápido (5 min)</h2>
     <a class="video-link" href="https://www.tiktok.com/@pipecalisteniafit/video/7653125334275083552?_r=1&_t=ZS-99NC6Z25S1x" target="_blank" rel="noopener noreferrer">Ver video</a>
     <ul class="warmup-mini">
@@ -345,7 +367,7 @@
   </section>
 
   <!-- Recomendaciones -->
-  <section>
+  <section id="recomendaciones">
     <h2>✅ Recomendaciones</h2>
     <ul>
       <li>Es más recomendable hacer los ejercicios <strong>sentado</strong>, para no poner tensión extra en las piernas.</li>
@@ -361,7 +383,7 @@
   </section>
 
   <!-- Tabla principal (siempre visible, incluso en modo simple) -->
-  <section>
+  <section id="tabla-rutina">
     <h2>📋 Tabla de la Rutina</h2>
     <div class="table-scroll">
     <table>
@@ -428,7 +450,7 @@
   </section>
 
   <!-- Tiempo estimado -->
-  <section class="full-only">
+  <section class="full-only" id="tiempo-estimado">
     <h2>⏱️ Tiempo Total Estimado de la Rutina</h2>
     <p>Cálculo aproximado usando un ritmo normal controlado (~3 segundos por repetición). En los ejercicios unilaterales (1 a 4), el descanso se toma <strong>una sola vez por serie</strong>, tras trabajar ambos brazos.</p>
     <div class="table-scroll">
@@ -465,7 +487,7 @@
   </section>
 
   <!-- Estiramiento post-entrenamiento (solo modo simple) -->
-  <section class="simple-only">
+  <section class="simple-only" id="estiramiento-simple">
     <h2>🧘 Estiramiento Zona Lumbar</h2>
     <p>Ayuda a liberar la tensión acumulada en la espalda baja tras la rutina, mejorando la movilidad y previniendo molestias.</p>
     <a class="video-link" href="https://www.tiktok.com/@lic_bruno_carballo/video/7645820916861062407?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer">Ver video</a>
@@ -474,7 +496,7 @@
   </section>
 
   <!-- Instrucciones de ejecución -->
-  <section class="full-only">
+  <section class="full-only" id="instrucciones-ejecucion">
     <h2>🎯 Instrucciones de Ejecución y Postura</h2>
 
     <div class="exercise-block">
@@ -514,7 +536,7 @@
   </section>
 
   <!-- Estiramiento post-entrenamiento -->
-  <section class="full-only">
+  <section class="full-only" id="estiramiento-post">
     <h2>🧘 Estiramiento Post-Entrenamiento (Enfriamiento)</h2>
     <p>Al terminar la rutina, dedica unos minutos a estirar los músculos trabajados (espalda, pecho, hombros y brazos). Esto ayuda a la recuperación y reduce la rigidez muscular del día siguiente.</p>
     <a class="video-link" href="https://www.youtube.com/watch?v=ienwpFp3Kvg" target="_blank" rel="noopener noreferrer">Ver video</a>
@@ -529,7 +551,7 @@
   </section>
 
   <!-- Reglas unilaterales -->
-  <section class="full-only">
+  <section class="full-only" id="reglas-unilaterales">
     <h2>💡 Reglas del Entrenamiento Unilateral</h2>
     <ol>
       <li><strong>Comienza con tu lado débil:</strong> si eres diestro, empieza siempre con el brazo izquierdo. Haz las repeticiones máximas controladas que puedas y luego iguala esa cantidad con el brazo fuerte.</li>
@@ -551,7 +573,7 @@
   </section>
 
   <!-- Análisis -->
-  <section class="full-only">
+  <section class="full-only" id="puntos-fuertes">
     <h2>🌟 Puntos Fuertes de la Rutina <span class="badge">10/10 para empezar</span></h2>
     <ul>
       <li><strong>Estructura de Movimientos Completa:</strong> cubre empuje horizontal, empuje vertical, tracción horizontal y aislamiento de brazos.</li>
@@ -561,7 +583,7 @@
     </ul>
   </section>
 
-  <section class="full-only">
+  <section class="full-only" id="aspectos-80kg">
     <h2>⚠️ Aspectos a Tener en Cuenta para tus 80 kg</h2>
     <ol>
       <li><strong>Ejercicios donde los 5 kg se sentirán ligeros rápidamente:</strong> Remo a una mano y Floor Press. Es probable que en 2 semanas superes las 15 repeticiones con facilidad — aplica el ritmo 4-0-1-0 de inmediato.</li>
@@ -589,13 +611,13 @@
     </div>
   </section>
 
-  <section class="full-only">
+  <section class="full-only" id="recomendacion-futuro">
     <h2>💡 Recomendación para el Futuro Próximo</h2>
     <p>En 4 a 6 semanas, tu musculatura se habrá coordinado y los 5 kg totales dejarán de romper fibras en la espalda y el pecho, incluso usando el método lento. Cuando alcances ese punto, considera una <strong>mancuerna regulable (de discos)</strong> o un juego que permita subir a <strong>7.5 kg o 10 kg</strong> para mantener la sobrecarga progresiva.</p>
   </section>
 
   <!-- Seguimiento -->
-  <section class="full-only">
+  <section class="full-only" id="seguimiento">
     <h2>📱 Seguimiento del Entrenamiento</h2>
     <p>Para mantener la constancia y ver tu progreso real a lo largo de las semanas, es fundamental <strong>registrar cada vez que completes la rutina</strong> en alguna app de seguimiento de hábitos o entrenamiento.</p>
     <ul>
@@ -609,7 +631,7 @@
   </section>
 
   <!-- Seguimiento resumido (solo modo simple) -->
-  <section class="simple-only">
+  <section class="simple-only" id="seguimiento-simple">
     <h2>📱 Registrá tu Entrenamiento</h2>
     <p>No olvides marcar en tu app (Habitica, Streaks, Strong, Hevy, etc.) que completaste hoy la rutina, para llevar el conteo de tu constancia.</p>
   </section>
@@ -634,6 +656,23 @@
     try { saved = localStorage.getItem('rutinaMode') || 'full'; } catch (e) {}
     setMode(saved);
   })();
+
+  function initCollapsible() {
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach(function (section) {
+      const heading = section.querySelector(':scope > h2');
+      if (!heading) return;
+      const key = 'section-collapsed-' + section.id;
+      let collapsed = false;
+      try { collapsed = sessionStorage.getItem(key) === '1'; } catch (e) {}
+      section.classList.toggle('collapsed', collapsed);
+      heading.addEventListener('click', function () {
+        const isCollapsed = section.classList.toggle('collapsed');
+        try { sessionStorage.setItem(key, isCollapsed ? '1' : '0'); } catch (e) {}
+      });
+    });
+  }
+  initCollapsible();
 </script>
 
 </body>
